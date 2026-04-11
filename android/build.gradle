@@ -9,6 +9,24 @@ rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
+
+// Force all subprojects (plugins) to use compatible SDK versions
+// This must be registered BEFORE evaluationDependsOn(":app")
+subprojects {
+    afterEvaluate { project ->
+        if (project.hasProperty('android')) {
+            project.android {
+                compileSdk = 34
+                ndkVersion = "25.1.8937393"
+                defaultConfig {
+                    minSdk = 21
+                    targetSdk = 34
+                }
+            }
+        }
+    }
+}
+
 subprojects {
     project.evaluationDependsOn(":app")
 }
