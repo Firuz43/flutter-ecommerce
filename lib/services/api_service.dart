@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../models/product.dart';
+
 class ApiService {
   final Dio _dio = Dio(BaseOptions(
     // USE YOUR COMPUTER'S IP, NOT LOCALHOST
@@ -43,12 +45,13 @@ class ApiService {
 
   // --- PRODUCT METHODS ---
 
-  Future<List<dynamic>> getProducts() async {
+  Future<List<Product>> fetchProducts() async {
     try {
       final response = await _dio.get('/products');
-      return response.data;
+      List<dynamic> data = response.data;
+      return data.map((json) => Product.fromJson(json)).toList();
     } catch (e) {
-      rethrow;
+      throw Exception('Failed to load products: $e');
     }
   }
 }
