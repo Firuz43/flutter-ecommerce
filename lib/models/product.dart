@@ -13,7 +13,7 @@ class Product {
     required this.imageUrl,
   });
 
-  // This factory converts the JSON from your Go backend into a Dart object
+  // This factory converts the JSON from your Go backend into a Dart object ///
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       id: json['id'],
